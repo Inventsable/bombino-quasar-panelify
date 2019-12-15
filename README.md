@@ -4,6 +4,8 @@
 
 ![](./src/assets/preview.png)
 
+## [See this panel live in a browser here](https://inventsable-panels.web.app/panelify-demo)
+
 > **NOTE:** This repo should not be `git clone`d directly because it has breaking placeholder values and will not run on it's own.
 
 ```bash
