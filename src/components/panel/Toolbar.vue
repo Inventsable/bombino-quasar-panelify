@@ -1,18 +1,13 @@
 <template>
   <q-header>
-    <q-bar id="toolbar" style="min-width: 400px;">
+    <q-bar id="toolbar">
       <!-- Only needed to flush all Vuex settings -->
       <!-- <router-btn path="/extra/settings" icon="mdi-settings" /> -->
       <!-- <q-btn dense flat round icon="mdi-incognito" @click="" /> -->
       <q-space />
       <div style="width: 186px; display: flex; flex-wrap: none;">
         <q-tabs v-model="activeTab" shrink stretch>
-          <q-route-tab
-            v-for="(tab, i) in tabs"
-            :key="i"
-            :label="tab.label"
-            :to="tab.route"
-          ></q-route-tab>
+          <q-route-tab v-for="(tab, i) in tabs" :key="i" :label="tab.label" :to="tab.route"></q-route-tab>
         </q-tabs>
       </div>
     </q-bar>
@@ -57,6 +52,10 @@ export default {
 </script>
 
 <style>
+#toolbar {
+  min-width: var(--min-width);
+}
+
 .q-layout__section--marginal {
   user-select: none;
   cursor: default;

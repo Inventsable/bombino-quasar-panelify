@@ -32,10 +32,10 @@ export default {
   },
   data: () => ({
     isMounted: false,
-    menus: null,
     isBrowser: false,
+    menus: null,
     loading: false,
-    lastMainRoute: null
+    csInterface: null
   }),
   computed: {
     ...mapGetters("settings", ["settings", "config"]),
@@ -71,6 +71,13 @@ export default {
     this.getSettings();
     // this.deleteSettings();
     //
+    if (!isBrowser) {
+      console.log("Loading CSInterface");
+      this.csInterface = new CSInterface();
+      this.csInterface.addEventListener("console", this.consoler);
+      this.loadUniversalScripts();
+    }
+
     console.log("SETTINGS:", this.settings);
     this.$q.notify.setDefaults({
       position: "top",
@@ -112,6 +119,49 @@ export default {
         `${/^\-\-/.test(prop) ? prop : "--" + prop}`,
         data
       );
+    },
+    loadScript(path) {
+      // Correctly loads a script regardless of whether Animate or regular CEP app
+      if (!/FLPR/.test(spy.appName))
+        this.csInterface.evalScript(`$.evalFile('${path}')`);
+      else
+        this.csInterface.evalScript(
+          `fl.runScript(FLfile.platformPathToURI("${path}"))`
+        );
+    },
+    consoler(msg) {
+      // Catches all console.log() usage in .jsx files via CSEvent
+      console.log(`${spy.appName}: ${msg.data}`);
+    },
+    loadUniversalScripts() {
+      // Preloads any script located inside ./src/host/universal
+      let utilFolder = window.cep.fs.readdir(
+        `${spy.path.root}/src/host/universal/`
+      );
+      if (!utilFolder.err) {
+        let valids = utilFolder.data.filter(file => {
+          return /\.(jsx|jsfl)$/.test(file);
+        });
+        valids.forEach(file => {
+          this.loadScript(`${spy.path.root}/src/host/universal/${file}`);
+        });
+      }
+      // Preloads any script located in ./src/host/[appName]/
+      let hostFolder = window.cep.fs.readdir(
+        `${spy.path.root}/src/host/${spy.appName}/`
+      );
+      if (!hostFolder.err) {
+        let valids = hostFolder.data.filter(file => {
+          return /\.(jsx|jsfl)$/.test(file);
+        });
+        valids.forEach(file => {
+          this.loadScript(`${spy.path.root}/src/host/${spy.appName}/${file}`);
+        });
+      } else {
+        console.log(
+          `${spy.path.root}/src/host/${spy.appName} has no valid files or does not exist`
+        );
+      }
     }
   }
 };
@@ -126,13 +176,13 @@ export default {
   --color-shaded: rgba(0, 0, 0, 0.125);
   --toolbar-height: 48px;
   --bottombar-height: 30px;
-
+  --min-width: 400px;
   --app-scrollbar-width: 16px;
 
   background-color: var(--color-bg);
   color: var(--color-default);
   font-family: "Open Sans", sans-serif;
-  min-width: 400px;
+  min-width: var(--min-width);
 }
 
 body::-webkit-scrollbar {

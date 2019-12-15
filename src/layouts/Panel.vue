@@ -1,11 +1,11 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <update-modal
+    <!-- <update-modal
       :state="updateNotification"
       @close="updateNotification = false"
-    />
+    />-->
     <toolbar />
-    <toolbar-bottom @promptUpdate="updateNotification = true" />
+    <!-- <toolbar-bottom @promptUpdate="updateNotification = true" /> -->
     <q-pull-to-refresh style="height: 100%;" @refresh="refresh">
       <q-page-container>
         <router-view />
