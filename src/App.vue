@@ -1,8 +1,10 @@
 <template>
   <div id="q-app">
-    <!-- <render-dialog /> -->
-    <Menus refresh debug />
-    <router-view style />
+    <Panel>
+      <!-- <render-dialog /> -->
+      <Menus refresh debug />
+      <router-view style />
+    </Panel>
   </div>
 </template>
 
