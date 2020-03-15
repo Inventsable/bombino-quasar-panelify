@@ -1,7 +1,7 @@
 <template>
   <div id="q-app">
     <!-- <render-dialog /> -->
-    <menus v-if="!isBrowser" />
+    <Menus refresh debug />
     <router-view style />
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
   data: () => ({
     isMounted: false,
     isBrowser: false,
-    loading: false,
+    loading: false
   }),
   computed: {
     ...mapGetters("settings", ["settings", "config"]),
@@ -71,7 +71,6 @@ export default {
     }
   },
   async mounted() {
-
     this.loading = false;
     //
     this.getSettings();
@@ -117,7 +116,7 @@ export default {
         `${/^\-\-/.test(prop) ? prop : "--" + prop}`,
         data
       );
-    },
+    }
   }
 };
 </script>
