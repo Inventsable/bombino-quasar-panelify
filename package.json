@@ -17,17 +17,15 @@
     "update": "bombino-cmd update",
     "register": "bombino-cmd register",
     "help": "bombino-cmd help",
-    "convert": "node ./bin/convertToPanelify.js",
-    "clear": "node ./bin/deleteRenders.js"
+    "convert": "node ./bin/convertToPanelify.js"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "cep-spy": "^1.1.1",
-    "cluecumber": "0.0.31",
+    "lokney": "^1.0.0",
     "lottie-web": "^5.5.9",
     "quasar": "^1.0.0",
-    "starlette": "^0.4.5",
-    "vue-drag-drop": "^1.1.4"
+    "starlette": "^0.4.5"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
@@ -36,8 +34,7 @@
     "chalk": "^3.0.0",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.0",
-    "types-for-adobe": "^1.5.0",
-    "worker-loader": "^2.0.0"
+    "types-for-adobe": "^1.5.0"
   },
   "engines": {
     "node": ">= 8.9.0",
